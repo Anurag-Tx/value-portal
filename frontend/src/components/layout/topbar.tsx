@@ -17,6 +17,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/lib/auth-context";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 function getInitials(name: string) {
   return name
@@ -59,6 +60,7 @@ export function Topbar() {
       </div>
 
       <div className="ml-auto flex items-center gap-2">
+        <ThemeToggle />
         <Button variant="ghost" size="icon" className="relative">
           <Bell className="h-4 w-4" />
         </Button>
