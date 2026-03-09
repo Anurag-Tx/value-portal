@@ -51,8 +51,8 @@ Open browser → `http://localhost:3000`
 1. Open `http://localhost:3000/register`
 2. Fill in:
    - **Full Name**: `Anurag Admin`
-   - **Email**: `admin@test.com`
-   - **Password**: `Test@1234`
+   - **Email**: `anurag@testingxperts.com`
+   - **Password**: `anurag`
 3. Click **Create account**
 4. You should be redirected to the Dashboard
 
@@ -62,13 +62,13 @@ Open browser → `http://localhost:3000`
 
 Go to **Supabase Dashboard → SQL Editor** and run:
 ```sql
-UPDATE profiles SET role = 'admin' WHERE email = 'admin@test.com';
+UPDATE profiles SET role = 'admin' WHERE email = 'anurag@testingxperts.com';
 ```
 
 ### 1.3 Verify Admin Role
 
 1. Log out (click avatar in top-right → **Log out**)
-2. Log back in with `admin@test.com` / `Test@1234`
+2. Log back in with `anurag@testingxperts.com` / `anurag`
 3. Click the avatar dropdown
 
 **Expected**: Role badge shows **"Admin"**
