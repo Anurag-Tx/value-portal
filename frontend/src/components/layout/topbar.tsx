@@ -95,12 +95,8 @@ export function Topbar() {
         </Link>
 
         <DropdownMenu>
-          <DropdownMenuTrigger
-            render={
-              <Button variant="ghost" className="h-8 w-8 rounded-full p-0" />
-            }
-          >
-            <Avatar className="h-8 w-8">
+          <DropdownMenuTrigger className="rounded-full outline-none focus-visible:ring-2 focus-visible:ring-ring">
+            <Avatar className="h-8 w-8 cursor-pointer">
               <AvatarFallback className="text-xs bg-primary text-primary-foreground">
                 {user ? getInitials(user.full_name || user.email) : "?"}
               </AvatarFallback>

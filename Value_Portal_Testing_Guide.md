@@ -27,7 +27,27 @@ uvicorn app.main:app --reload --port 8000
 ```
 Backend runs at: `http://localhost:8000`
 
-### 2. Verify Backend is Running
+### 2. Run All Database Migrations
+
+> **CRITICAL — Do this once before any testing.** Open [Supabase Dashboard](https://supabase.com/dashboard) → SQL Editor → run each migration file in order.
+
+Copy and paste the contents of each file below into the SQL Editor and click **Run**:
+
+| Order | File | What it creates |
+|-------|------|----------------|
+| 1 | `backend/supabase/migrations/001_profiles.sql` | User profiles table |
+| 2 | `backend/supabase/migrations/002_accounts.sql` | Accounts table |
+| 3 | `backend/supabase/migrations/003_leads.sql` | Leads table |
+| 4 | `backend/supabase/migrations/004_ideas.sql` | Value ideas table |
+| 5 | `backend/supabase/migrations/005_assignments.sql` | Assignments table |
+| 6 | `backend/supabase/migrations/006_tracking.sql` | Status history + comments |
+| 7 | `backend/supabase/migrations/007_notifications.sql` | Notifications + escalation rules |
+| 8 | `backend/supabase/migrations/008_scoring.sql` | Score events + user scores + leaderboard |
+| 9 | `backend/supabase/migrations/009_dashboards_governance.sql` | Dashboard metrics + review cycles + impact |
+
+> If you already ran 001–006, just run 007, 008, and 009 now. Running them twice is safe — Supabase will return an error for tables that already exist, which you can ignore.
+
+### 5. Verify Backend is Running
 
 Open browser → `http://localhost:8000/health`
 
@@ -36,7 +56,7 @@ Open browser → `http://localhost:8000/health`
 {"status": "healthy", "version": "0.1.0"}
 ```
 
-### 3. Verify Frontend is Running
+### 4. Verify Frontend is Running
 
 Open browser → `http://localhost:3000`
 
@@ -96,7 +116,7 @@ UPDATE profiles SET role = 'admin' WHERE email = 'anurag@testingxperts.com';
 
 ## Test 2: Create an Account (Module 2)
 
-Log in as **admin@test.com**
+Log in as **anurag@testingxperts.com** (the admin you created in Test 1)
 
 1. Click **Accounts** in the sidebar
 2. Click **New Account**
@@ -200,7 +220,7 @@ Still logged in as **ravi@test.com**
 
 ## Test 5: Check Assignments (Module 5)
 
-Log out. Log in as **admin@test.com**
+Log out. Log in as **anurag@testingxperts.com**
 
 1. Click **Assignments** in the sidebar
 2. You should see **2 pending assignments**:
@@ -225,7 +245,7 @@ Log out. Log in as **admin@test.com**
 
 ## Test 6: Change Lead Status (Modules 7 + 6 + 8)
 
-Still logged in as **admin@test.com**
+Still logged in as **anurag@testingxperts.com**
 
 1. Go to **Leads** → click on `Cloud Migration Opportunity`
 2. Find the **"Change Status"** dropdown bar below the title
@@ -254,7 +274,7 @@ Each status change triggers:
 
 ## Test 7: Change Idea Status (Modules 7 + 6 + 8)
 
-Still logged in as **admin@test.com**
+Still logged in as **anurag@testingxperts.com**
 
 1. Go to **Ideas** → click on `Automated Deployment Pipeline`
 2. Use the **"Change Status"** dropdown:
@@ -405,7 +425,7 @@ Still logged in as **ravi@test.com**
 
 ## Test 12: Governance Reviews (Module 12)
 
-Log out. Log in as **admin@test.com**
+Log out. Log in as **anurag@testingxperts.com**
 
 1. Click **Reviews** in the sidebar
 2. Click **New Review Cycle**
@@ -528,7 +548,7 @@ Then re-run the cron endpoint. Admins should receive escalation notifications.
 |-------|---------|
 | "Rate limit exceeded" on signup | Create users directly in Supabase Dashboard → Auth → Users → Add User (check "Auto Confirm") |
 | "No stakeholders found" on submit | Update the account in Supabase to set `account_owner_id`, `sales_lead_id`, `practice_leader_id` |
-| "Role not authorized" (403) | Run `UPDATE profiles SET role = 'admin' WHERE email = 'admin@test.com';` in Supabase SQL |
+| "Role not authorized" (403) | Run `UPDATE profiles SET role = 'admin' WHERE email = 'anurag@testingxperts.com';` in Supabase SQL |
 | AI classification not appearing | Check `ANTHROPIC_API_KEY` is set in `backend/.env` — look at backend terminal for `[AI]` logs |
 | Notifications bell always 0 | Make sure the `notifications` table exists (run migration 007) and status changes are being made |
 | Leaderboard shows 0 points | Make sure `score_events` and `user_scores` tables exist (run migration 008) |
